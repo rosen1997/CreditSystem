@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CreditS.Repository.Managers;
+using CreditS.Repository.Managers.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,9 +12,21 @@ namespace CreditS.Repository.UnitOfWorkPattern
         private readonly RepositoryContext repositoryContext;
         private bool disposedValue;
 
+        public ILoginInfoManager LoginInfoManager { get; }
+
+        public IRoleManager RoleManager { get; }
+
+        public ITransactionDataManager TransactionDataManager { get; }
+
+        public IUserManager UserManager { get; }
+
         public UnitOfWork(RepositoryContext repositoryContext)
         {
             this.repositoryContext = repositoryContext;
+            LoginInfoManager = new LoginInfoManager(repositoryContext);
+            RoleManager = new RoleManager(repositoryContext);
+            TransactionDataManager = new TransactionDataManager(repositoryContext);
+            UserManager = new UserManager(repositoryContext);
         }
 
         public void RevertChanges()
