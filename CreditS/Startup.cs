@@ -26,6 +26,7 @@ namespace CreditS
             string connectionString = Configuration.GetConnectionString("ConnectionString1");
             services.AddDbContext<RepositoryContext>(options => { options.UseSqlServer(connectionString); });
 
+            services.AddAutoMapper(typeof(Startup));
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             services.AddControllersWithViews();
