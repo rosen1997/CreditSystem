@@ -25,6 +25,8 @@ namespace CreditS.Repository
 
             modelBuilder.Entity<User>()
                 .HasIndex(x => x.PhoneNumber).IsUnique();
+            modelBuilder.Entity<User>()
+                .Property(x => x.Credits).HasDefaultValue(100);
 
             modelBuilder.Entity<Role>()
                 .HasIndex(x => x.RoleDescription).IsUnique();
@@ -33,6 +35,7 @@ namespace CreditS.Repository
                 .HasOne(x => x.SendingUser).WithMany(x => x.SentTransactionsData).OnDelete(DeleteBehavior.ClientSetNull);
             modelBuilder.Entity<TransactionData>()
                 .HasOne(x => x.ReceivingUser).WithMany(x => x.ReceivedTransactionsData).OnDelete(DeleteBehavior.ClientSetNull);
+
         }
     }
 }
