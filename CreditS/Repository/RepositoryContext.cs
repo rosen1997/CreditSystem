@@ -14,11 +14,15 @@ namespace CreditS.Repository
         }
 
         public DbSet<LoginInfo> LoginInfos { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<LoginInfo>()
                 .HasIndex(x => x.Username).IsUnique();
+
+            modelBuilder.Entity<User>()
+                .HasIndex(x => x.PhoneNumber).IsUnique();
         }
     }
 }

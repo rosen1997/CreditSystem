@@ -8,23 +8,27 @@ using System.Threading.Tasks;
 namespace CreditS.Repository.Entities
 {
     [Serializable]
-    [Table("LoginInfos")]
-    public class LoginInfo
+    [Table("Users")]
+    public class User
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [MaxLength(64)]
         [Required]
-        public string Username { get; set; }
+        public string FirstName { get; set; }
+
+        [MaxLength(64)]
+        [Required]
+        public string LastName { get; set; }
+
+        [MaxLength(9)]
+        [Required]
+        public string PhoneNumber { get; set; }
 
         [Required]
-        public byte[] PasswordHash { get; set; }
+        public float Credits { get; set; }
 
-        [Required]
-        public byte[] PasswordSalt { get; set; }
-
-        public int UserId { get; set; }
-        public User User { get; set; }
+        public LoginInfo LoginInfo { get; set; }
     }
 }
