@@ -1,4 +1,5 @@
 using CreditS.Repository;
+using CreditS.Repository.UnitOfWorkPattern;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -24,6 +25,8 @@ namespace CreditS
         {
             string connectionString = Configuration.GetConnectionString("ConnectionString1");
             services.AddDbContext<RepositoryContext>(options => { options.UseSqlServer(connectionString); });
+
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             services.AddControllersWithViews();
 
