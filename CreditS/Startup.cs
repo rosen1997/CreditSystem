@@ -1,5 +1,7 @@
+using CreditS.Helpers;
 using CreditS.Repository;
 using CreditS.Repository.UnitOfWorkPattern;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -8,6 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace CreditS
 {
@@ -25,6 +29,28 @@ namespace CreditS
         {
             string connectionString = Configuration.GetConnectionString("ConnectionString1");
             services.AddDbContext<RepositoryContext>(options => { options.UseSqlServer(connectionString); });
+
+            IConfigurationSection appSettingsSection = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
+            AppSettings appSettings = appSettingsSection.Get<AppSettings>();
+            byte[] key = Encoding.ASCII.GetBytes(appSettings.Secret);
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
 
             services.AddAutoMapper(typeof(Startup));
             services.AddTransient<IUnitOfWork, UnitOfWork>();

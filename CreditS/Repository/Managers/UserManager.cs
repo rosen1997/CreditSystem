@@ -1,6 +1,7 @@
 ﻿using CreditS.Repository.Entities;
 using CreditS.Repository.Managers.Interfaces;
 using CreditS.Repository.RepositoryPattern;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,15 @@ namespace CreditS.Repository.Managers
     {
         public UserManager(RepositoryContext repositoryContext) : base(repositoryContext)
         {
+        }
+
+        public User GetByUsernameWithLoginInfo(string username)
+        {
+            return RepositoryContext.Users
+                .Include(x => x.LoginInfo)
+                .Where(x => x.LoginInfo.Username.Equals(username))
+                .AsNoTracking()
+                .SingleOrDefault();
         }
     }
 }

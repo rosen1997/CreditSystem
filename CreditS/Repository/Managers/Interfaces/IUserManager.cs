@@ -9,5 +9,6 @@ namespace CreditS.Repository.Managers.Interfaces
 {
     public interface IUserManager : IRepositoryBase<User>
     {
+        User GetByUsernameWithLoginInfo(string username);
     }
 }

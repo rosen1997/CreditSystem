@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using CreditS.Repository.Entities;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,8 @@ namespace CreditS.Repository.Models
 
         public float Credits { get; set; }
 
-        [JsonIgnore]
-        private string Token { get; set; }
+        public Role Role { get; set; }
+
+        public string Token { get; set; }
     }
 }
