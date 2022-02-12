@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CreditS.Helpers;
+using CreditS.Repository.Entities;
 using CreditS.Repository.Models;
 using CreditS.Repository.Services.Interfaces;
 using CreditS.Repository.UnitOfWorkPattern;
@@ -93,12 +94,50 @@ namespace CreditS.Repository.Services
 
         public UserModel CreateUser(CreateUserModel createUserModel)
         {
-            throw new NotImplementedException();
+            var userDb = unitOfWork.UserManager.GetByUsernameWithLoginInfo(createUserModel.Username);
+            if (userDb != null)
+            {
+                //TODO: throw custom exception username taken
+            }
+
+            if (userDb.PhoneNumber.Equals(createUserModel.PhoneNumber))
+            {
+                //TODO: throw custom exception phone number is already registered
+            }
+
+            byte[] passwordHash, passwordSalt;
+            CreatePasswordHash(createUserModel.Password, out passwordHash, out passwordSalt);
+
+            var newUser = mapper.Map<User>(createUserModel);
+            int roleId = unitOfWork.RoleManager.GetAllAsNoTracking().First().Id;
+            newUser.RoleId = roleId;
+
+            LoginInfo loginInfo = new LoginInfo
+            {
+                Username = createUserModel.Username,
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt,
+                User = newUser
+            };
+
+            try
+            {
+                unitOfWork.LoginInfoManager.Create(loginInfo);
+                unitOfWork.SaveChanges();
+            }
+            catch
+            {
+                throw;
+            }
+
+            return mapper.Map<UserModel>(loginInfo.User);
         }
 
         public IEnumerable<UserModel> GetAllUsers()
         {
-            throw new NotImplementedException();
+            var users = unitOfWork.UserManager.GetAllAsNoTracking();
+
+            return mapper.Map<IEnumerable<UserModel>>(users);
         }
     }
 }

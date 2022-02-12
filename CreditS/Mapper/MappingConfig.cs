@@ -16,6 +16,7 @@ namespace CreditS.Mapper
             UserModelMap();
             TransactionDataMap();
             TransactionDataModelMap();
+            UserCreateMap();
         }
 
         public void UserMap()
@@ -39,6 +40,12 @@ namespace CreditS.Mapper
         public void TransactionDataModelMap()
         {
             CreateMap<TransactionDataModel, TransactionData>()
+                ;
+        }
+
+        public void UserCreateMap()
+        {
+            CreateMap<User, CreateUserModel>()
                 ;
         }
     }
