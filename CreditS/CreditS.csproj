@@ -35,6 +35,8 @@
     <Compile Remove="Migrations\20220212092257_AddTransactionsDataTable.Designer.cs" />
     <Compile Remove="Migrations\20220212092850_AddTransactionsDataTable.cs" />
     <Compile Remove="Migrations\20220212092850_AddTransactionsDataTable.Designer.cs" />
+    <Compile Remove="Migrations\20220212114717_RolesSeed.cs" />
+    <Compile Remove="Migrations\20220212114717_RolesSeed.Designer.cs" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

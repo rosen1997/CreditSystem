@@ -31,6 +31,16 @@ namespace CreditS.Repository
             modelBuilder.Entity<Role>()
                 .HasIndex(x => x.RoleDescription).IsUnique();
 
+            modelBuilder.Entity<Role>()
+                .HasData
+                (
+                new Role[]
+                {
+                    new Role {Id = 1, RoleDescription = "User" },
+                    new Role {Id = 2, RoleDescription = "Administrator" },
+                }
+                );
+
             modelBuilder.Entity<TransactionData>()
                 .HasOne(x => x.SendingUser).WithMany(x => x.SentTransactionsData).OnDelete(DeleteBehavior.ClientSetNull);
             modelBuilder.Entity<TransactionData>()

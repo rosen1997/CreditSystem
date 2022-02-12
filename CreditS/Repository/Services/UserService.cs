@@ -109,7 +109,7 @@ namespace CreditS.Repository.Services
             CreatePasswordHash(createUserModel.Password, out passwordHash, out passwordSalt);
 
             var newUser = mapper.Map<User>(createUserModel);
-            int roleId = unitOfWork.RoleManager.GetAllAsNoTracking().First().Id;
+            int roleId = unitOfWork.RoleManager.GetAllAsNoTracking().OrderBy(x => x.Id).First().Id;
             newUser.RoleId = roleId;
 
             LoginInfo loginInfo = new LoginInfo
