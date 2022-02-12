@@ -15,6 +15,11 @@ namespace CreditS.Repository.Managers
         {
         }
 
+        public User GetByPhoneNumber(string phoneNumber)
+        {
+            return RepositoryContext.Users.Where(x => x.PhoneNumber.Equals(phoneNumber)).AsNoTracking().FirstOrDefault();
+        }
+
         public User GetByUsernameWithLoginInfo(string username)
         {
             return RepositoryContext.Users

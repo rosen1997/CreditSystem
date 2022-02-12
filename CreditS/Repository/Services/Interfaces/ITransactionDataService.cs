@@ -11,6 +11,6 @@ namespace CreditS.Repository.Services.Interfaces
         IEnumerable<TransactionDataModel> GetAllTransactionsWithUsers();
         IEnumerable<TransactionDataModel> GetAllSentTransactions(string phone);
         IEnumerable<TransactionDataModel> GetAllReceivedTransactions(string phone);
-        TransactionDataModel SendCredits(string senderPhone, string receiverPhone, float amount);
+        TransactionDataModel SendCredits(string senderPhone, string receiverPhone, float amount, string wishMessage = null);
     }
 }

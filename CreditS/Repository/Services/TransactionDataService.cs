@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CreditS.Repository.Entities;
 using CreditS.Repository.Models;
 using CreditS.Repository.Services.Interfaces;
 using CreditS.Repository.UnitOfWorkPattern;
@@ -41,9 +42,45 @@ namespace CreditS.Repository.Services
             return mapper.Map<IEnumerable<TransactionDataModel>>(transactions);
         }
 
-        public TransactionDataModel SendCredits(string senderPhone, string receiverPhone, float amount)
+        public TransactionDataModel SendCredits(string senderPhone, string receiverPhone, float amount, string wishMessage = null)
         {
-            throw new NotImplementedException();
+            var sendingUser = unitOfWork.UserManager.GetByPhoneNumber(senderPhone);
+            var receivingUser = unitOfWork.UserManager.GetByPhoneNumber(receiverPhone);
+
+            if (receivingUser == null)
+            {
+                //TODO: throw exception no user with that phone found
+            }
+
+            var transaction = new TransactionData
+            {
+                ReceivingUserId = receivingUser.Id,
+                SendingUserId = sendingUser.Id,
+                Amount = amount,
+                WishMessage = wishMessage
+            };
+
+            sendingUser.Credits -= amount;
+            receivingUser.Credits += amount;
+
+            try
+            {
+                unitOfWork.BeginTransaction();
+
+                unitOfWork.UserManager.Update(sendingUser);
+                unitOfWork.UserManager.Update(receivingUser);
+                unitOfWork.TransactionDataManager.Create(transaction);
+
+                unitOfWork.CommitTransaction();
+                unitOfWork.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                unitOfWork.RollbackTransaction();
+                throw new Exception("Transaction could not be completed", ex);
+            }
+
+            return mapper.Map<TransactionDataModel>(transaction);
         }
     }
 }
