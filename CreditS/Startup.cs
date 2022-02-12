@@ -1,5 +1,7 @@
 using CreditS.Helpers;
 using CreditS.Repository;
+using CreditS.Repository.Services;
+using CreditS.Repository.Services.Interfaces;
 using CreditS.Repository.UnitOfWorkPattern;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -54,6 +56,8 @@ namespace CreditS
 
             services.AddAutoMapper(typeof(Startup));
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<ITransactionDataService, TransactionDataService>();
+            services.AddTransient<IUserService, UserService>();
 
             services.AddControllersWithViews();
 
