@@ -15,6 +15,7 @@ namespace CreditS.Repository
 
         public DbSet<LoginInfo> LoginInfos { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -23,6 +24,9 @@ namespace CreditS.Repository
 
             modelBuilder.Entity<User>()
                 .HasIndex(x => x.PhoneNumber).IsUnique();
+
+            modelBuilder.Entity<Role>()
+                .HasIndex(x => x.RoleDescription).IsUnique();
         }
     }
 }

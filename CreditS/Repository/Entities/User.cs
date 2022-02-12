@@ -30,5 +30,8 @@ namespace CreditS.Repository.Entities
         public float Credits { get; set; }
 
         public LoginInfo LoginInfo { get; set; }
+
+        public int RoleId { get; set; }
+        public Role Role { get; set; }
     }
 }
