@@ -33,5 +33,8 @@ namespace CreditS.Repository.Entities
 
         public int RoleId { get; set; }
         public Role Role { get; set; }
+
+        public IEnumerable<TransactionData> SentTransactionsData { get; set; }
+        public IEnumerable<TransactionData> ReceivedTransactionsData { get; set; }
     }
 }
