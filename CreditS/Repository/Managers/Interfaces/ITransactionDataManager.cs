@@ -9,5 +9,6 @@ namespace CreditS.Repository.Managers.Interfaces
 {
     public interface ITransactionDataManager : IRepositoryBase<TransactionData>
     {
+        IEnumerable<TransactionData> GetAllWithUsers();
     }
 }
