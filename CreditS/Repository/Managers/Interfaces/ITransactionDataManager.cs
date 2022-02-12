@@ -10,5 +10,7 @@ namespace CreditS.Repository.Managers.Interfaces
     public interface ITransactionDataManager : IRepositoryBase<TransactionData>
     {
         IEnumerable<TransactionData> GetAllWithUsers();
+        IEnumerable<TransactionData> GetSentTransactionsByPhoneNumber(string phone);
+        IEnumerable<TransactionData> GetReceivedTransactionsByPhoneNumber(string phone);
     }
 }

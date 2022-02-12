@@ -20,14 +20,18 @@ namespace CreditS.Repository.Services
             this.mapper = mapper;
         }
 
-        public IEnumerable<TransactionDataModel> GetAllReceivedTransactions(string username)
+        public IEnumerable<TransactionDataModel> GetAllReceivedTransactions(string phone)
         {
-            throw new NotImplementedException();
+            var transactions = unitOfWork.TransactionDataManager.GetReceivedTransactionsByPhoneNumber(phone);
+
+            return mapper.Map<IEnumerable<TransactionDataModel>>(transactions);
         }
 
-        public IEnumerable<TransactionDataModel> GetAllSentTransactions(string username)
+        public IEnumerable<TransactionDataModel> GetAllSentTransactions(string phone)
         {
-            throw new NotImplementedException();
+            var transactions = unitOfWork.TransactionDataManager.GetSentTransactionsByPhoneNumber(phone);
+
+            return mapper.Map<IEnumerable<TransactionDataModel>>(transactions);
         }
 
         public IEnumerable<TransactionDataModel> GetAllTransactionsWithUsers()

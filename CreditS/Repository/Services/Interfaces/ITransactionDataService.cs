@@ -9,8 +9,8 @@ namespace CreditS.Repository.Services.Interfaces
     public interface ITransactionDataService
     {
         IEnumerable<TransactionDataModel> GetAllTransactionsWithUsers();
-        IEnumerable<TransactionDataModel> GetAllSentTransactions(string username);
-        IEnumerable<TransactionDataModel> GetAllReceivedTransactions(string username);
+        IEnumerable<TransactionDataModel> GetAllSentTransactions(string phone);
+        IEnumerable<TransactionDataModel> GetAllReceivedTransactions(string phone);
         TransactionDataModel SendCredits(string senderPhone, string receiverPhone, float amount);
     }
 }

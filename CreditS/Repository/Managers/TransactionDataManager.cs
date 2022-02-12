@@ -21,5 +21,21 @@ namespace CreditS.Repository.Managers
                 .Include(x => x.SendingUser)
                 .Include(x => x.ReceivingUser).AsNoTracking();
         }
+
+        public IEnumerable<TransactionData> GetReceivedTransactionsByPhoneNumber(string phone)
+        {
+            return RepositoryContext.TransactionsData
+                .Include(x => x.SendingUser)
+                .Include(x => x.ReceivingUser)
+                .Where(x => x.ReceivingUser.PhoneNumber.Equals(phone)).AsNoTracking();
+        }
+
+        public IEnumerable<TransactionData> GetSentTransactionsByPhoneNumber(string phone)
+        {
+            return RepositoryContext.TransactionsData
+               .Include(x => x.SendingUser)
+               .Include(x => x.ReceivingUser)
+               .Where(x => x.SendingUser.PhoneNumber.Equals(phone)).AsNoTracking();
+        }
     }
 }
