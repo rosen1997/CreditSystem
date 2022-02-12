@@ -4,6 +4,7 @@ using CreditS.Repository.Entities;
 using CreditS.Repository.Models;
 using CreditS.Repository.Services.Interfaces;
 using CreditS.Repository.UnitOfWorkPattern;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -21,11 +22,11 @@ namespace CreditS.Repository.Services
         private readonly IMapper mapper;
         private readonly AppSettings appSettings;
 
-        public UserService(IUnitOfWork unitOfWork, IMapper mapper, AppSettings appSettings)
+        public UserService(IUnitOfWork unitOfWork, IMapper mapper, IOptions<AppSettings> appSettings)
         {
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
-            this.appSettings = appSettings;
+            this.appSettings = appSettings.Value;
         }
 
         public UserModel Authenticate(string username, string password)
