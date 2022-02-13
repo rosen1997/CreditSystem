@@ -54,15 +54,7 @@ namespace CreditS.Controllers
         [Route("SendCredits")]
         public IActionResult SendCredits([FromBody] SendCreditsModel sendCreditsModel)
         {
-            TransactionDataModel transactionDataModel = null;
-            try
-            {
-                transactionDataModel = transactionDataService.SendCredits(sendCreditsModel);
-            }
-            catch (Exception ex)
-            {
-                return Problem(ex.Message);
-            }
+            TransactionDataModel transactionDataModel = transactionDataService.SendCredits(sendCreditsModel);
 
             return Ok(transactionDataModel);
         }

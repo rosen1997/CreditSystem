@@ -51,16 +51,7 @@ namespace CreditS.Controllers
         [Route("RegisterUser")]
         public IActionResult RegisterUser([FromBody] CreateUserModel createUserModel)
         {
-            UserModel user = null;
-
-            try
-            {
-                user = usersService.CreateUser(createUserModel);
-            }
-            catch (Exception ex)
-            {
-                return Problem(ex.Message);
-            }
+            UserModel user = usersService.CreateUser(createUserModel);
 
             return Ok(user);
 
