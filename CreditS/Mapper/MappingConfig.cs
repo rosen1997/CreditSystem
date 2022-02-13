@@ -45,7 +45,7 @@ namespace CreditS.Mapper
 
         public void UserCreateMap()
         {
-            CreateMap<User, CreateUserModel>()
+            CreateMap<CreateUserModel, User>()
                 ;
         }
     }

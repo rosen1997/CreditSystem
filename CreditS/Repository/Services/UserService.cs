@@ -101,7 +101,8 @@ namespace CreditS.Repository.Services
                 //TODO: throw custom exception username taken
             }
 
-            if (userDb.PhoneNumber.Equals(createUserModel.PhoneNumber))
+            var userDbP = unitOfWork.UserManager.GetByPhoneNumber(createUserModel.PhoneNumber);
+            if (userDbP != null)
             {
                 //TODO: throw custom exception phone number is already registered
             }
