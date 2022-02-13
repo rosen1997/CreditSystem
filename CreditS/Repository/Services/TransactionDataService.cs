@@ -42,10 +42,10 @@ namespace CreditS.Repository.Services
             return mapper.Map<IEnumerable<TransactionDataModel>>(transactions);
         }
 
-        public TransactionDataModel SendCredits(string senderPhone, string receiverPhone, float amount, string wishMessage = null)
+        public TransactionDataModel SendCredits(SendCreditsModel sendCreditsModel)
         {
-            var sendingUser = unitOfWork.UserManager.GetByPhoneNumber(senderPhone);
-            var receivingUser = unitOfWork.UserManager.GetByPhoneNumber(receiverPhone);
+            var sendingUser = unitOfWork.UserManager.GetByPhoneNumber(sendCreditsModel.SenderPhone);
+            var receivingUser = unitOfWork.UserManager.GetByPhoneNumber(sendCreditsModel.ReceiverPhone);
 
             if (receivingUser == null)
             {
@@ -56,12 +56,12 @@ namespace CreditS.Repository.Services
             {
                 ReceivingUserId = receivingUser.Id,
                 SendingUserId = sendingUser.Id,
-                Amount = amount,
-                WishMessage = wishMessage
+                Amount = sendCreditsModel.Amount,
+                WishMessage = sendCreditsModel.WishMessage
             };
 
-            sendingUser.Credits -= amount;
-            receivingUser.Credits += amount;
+            sendingUser.Credits -= sendCreditsModel.Amount;
+            receivingUser.Credits += sendCreditsModel.Amount;
 
             try
             {
