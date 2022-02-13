@@ -52,6 +52,11 @@ namespace CreditS.Repository.Services
                 //TODO: throw exception no user with that phone found
             }
 
+            if(sendingUser.Credits<sendCreditsModel.Amount)
+            {
+                //TODO: throw exception insufficient amount
+            }
+
             var transaction = new TransactionData
             {
                 ReceivingUserId = receivingUser.Id,
