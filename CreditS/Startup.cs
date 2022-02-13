@@ -1,3 +1,4 @@
+using CreditS.Exceptions.ExceptionMiddleware;
 using CreditS.Helpers;
 using CreditS.Repository;
 using CreditS.Repository.Services;
@@ -71,16 +72,7 @@ namespace CreditS
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
+            app.UseMiddleware<ExceptionsMiddleware>();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
