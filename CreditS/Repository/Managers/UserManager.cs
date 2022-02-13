@@ -20,9 +20,10 @@ namespace CreditS.Repository.Managers
             return RepositoryContext.Users.Where(x => x.PhoneNumber.Equals(phoneNumber)).AsNoTracking().FirstOrDefault();
         }
 
-        public User GetByUsernameWithLoginInfo(string username)
+        public User GetByUsernameWithLoginInfoAndRole(string username)
         {
             return RepositoryContext.Users
+                .Include(x => x.Role)
                 .Include(x => x.LoginInfo)
                 .Where(x => x.LoginInfo.Username.Equals(username))
                 .AsNoTracking()

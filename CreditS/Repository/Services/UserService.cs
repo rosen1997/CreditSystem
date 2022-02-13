@@ -31,7 +31,7 @@ namespace CreditS.Repository.Services
 
         public UserModel Authenticate(string username, string password)
         {
-            var user = unitOfWork.UserManager.GetByUsernameWithLoginInfo(username);
+            var user = unitOfWork.UserManager.GetByUsernameWithLoginInfoAndRole(username);
             if (user == null)
             {
                 return null;
@@ -95,7 +95,7 @@ namespace CreditS.Repository.Services
 
         public UserModel CreateUser(CreateUserModel createUserModel)
         {
-            var userDb = unitOfWork.UserManager.GetByUsernameWithLoginInfo(createUserModel.Username);
+            var userDb = unitOfWork.UserManager.GetByUsernameWithLoginInfoAndRole(createUserModel.Username);
             if (userDb != null)
             {
                 //TODO: throw custom exception username taken
