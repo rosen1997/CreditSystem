@@ -30,7 +30,7 @@ namespace CreditS
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string connectionString = Configuration.GetConnectionString("ConnectionString1");
+            string connectionString = Configuration.GetConnectionString("ConnectionString2");
             services.AddDbContext<RepositoryContext>(options => { options.UseSqlServer(connectionString); });
 
             IConfigurationSection appSettingsSection = Configuration.GetSection("AppSettings");
